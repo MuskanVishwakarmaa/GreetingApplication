@@ -8,6 +8,7 @@ public class GreetingMessage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String message;
 
     public GreetingMessage() {}
