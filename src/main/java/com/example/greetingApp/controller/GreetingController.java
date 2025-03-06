@@ -9,15 +9,14 @@ public class GreetingController {
 
     private final GreetingService greetingService;
 
-    // ✅ UC 2: Constructor-based Dependency Injection for GreetingService
     public GreetingController(GreetingService greetingService) {
         this.greetingService = greetingService;
     }
 
-    // ✅ UC 1: Basic JSON responses for different HTTP methods
-    @GetMapping("/default")
-    public String getDefaultGreeting() {
-        return "{\"message\": \"Hello, World!\"}";
+    @GetMapping
+    public String getGreeting(@RequestParam(required = false) String firstName,
+                              @RequestParam(required = false) String lastName) {
+        return "{\"message\": \"" + greetingService.getGreetingMessage(firstName, lastName) + "\"}";
     }
 
     @PostMapping
@@ -33,11 +32,5 @@ public class GreetingController {
     @DeleteMapping
     public String deleteGreeting() {
         return "{\"message\": \"Greeting Deleted!\"}";
-    }
-
-    // ✅ UC 2: Updated GET request to return GreetingService message
-    @GetMapping
-    public String getGreeting() {
-        return "{\"message\": \"" + greetingService.getGreetingMessage() + "\"}";
     }
 }
