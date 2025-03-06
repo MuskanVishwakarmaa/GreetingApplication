@@ -1,7 +1,9 @@
 package com.example.greetingApp.repository;
 
-import com.example.greetingApp.Greeting;
+import com.example.greetingApp.GreetingMessage;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface GreetingRepository extends JpaRepository<Greeting, Long> {
+@Repository
+public interface GreetingRepository extends JpaRepository<GreetingMessage, Long> {
 }
