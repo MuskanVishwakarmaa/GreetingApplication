@@ -61,4 +61,44 @@ public class AuthenticationService {
         mailSender.send(message);
         System.out.println("Login notification email sent to: " + email);
     }
+    public String forgotPassword(String email, String newPassword) {
+        Optional<AuthUser> userOptional = authUserRepository.findByEmail(email);
+        if (userOptional.isEmpty()) {
+            throw new RuntimeException("Sorry! We cannot find the user email: " + email);
+        }
+
+        AuthUser user = userOptional.get();
+        user.setPassword(passwordEncoder.encode(newPassword));
+        authUserRepository.save(user);
+
+        sendPasswordUpdateNotification(email);
+        return "Password has been changed successfully!";
+    }
+
+    public String resetPassword(String email, String currentPassword, String newPassword) {
+        Optional<AuthUser> userOptional = authUserRepository.findByEmail(email);
+        if (userOptional.isEmpty()) {
+            throw new RuntimeException("User not found with email: " + email);
+        }
+
+        AuthUser user = userOptional.get();
+        if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
+            throw new RuntimeException("Current password is incorrect!");
+        }
+
+        user.setPassword(passwordEncoder.encode(newPassword));
+        authUserRepository.save(user);
+
+        sendPasswordUpdateNotification(email);
+        return "Password reset successfully!";
+    }
+
+    private void sendPasswordUpdateNotification(String email) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(email);
+        message.setSubject("Password Update Confirmation");
+        message.setText("Your password has been successfully updated.");
+        mailSender.send(message);
+        System.out.println("Password update notification email sent to: " + email);
+    }
 }

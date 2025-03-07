@@ -1,7 +1,9 @@
 package com.example.greetingApp;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
+@Getter
 @Entity
 public class GreetingMessage {
 
@@ -17,16 +19,8 @@ public class GreetingMessage {
         this.message = message;
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getMessage() {
-        return message;
     }
 
     public void setMessage(String message) {
