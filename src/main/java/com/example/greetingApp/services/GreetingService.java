@@ -53,6 +53,15 @@ public class GreetingService {
             return greetingRepository.save(existingGreeting);
         });
     }
+    // UC8: Delete Greeting by ID
+    public boolean deleteGreeting(Long id) {
+        if (greetingRepository.existsById(id)) {
+            greetingRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
 
 
 }
