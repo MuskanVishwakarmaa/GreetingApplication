@@ -3,6 +3,7 @@ package com.example.greetingApp.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+
 @Entity
 @Table(name = "auth_users")
 @Getter
